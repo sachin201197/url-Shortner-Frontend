@@ -20,13 +20,10 @@ function Home() {
 
       setShortUrl([...shortUrl, val.data.result.full_short_link]);
 
-      const res = await axios.post(
-        `https://urlshot1.onrender.com/urlcreator/createurl`,
-        {
-          originalUrl: "sachin.com",
-          shortUrl: val.data.result.full_short_link,
-        }
-      );
+      axios.post(`https://urlshot1.onrender.com/urlcreator/createurl`, {
+        originalUrl: "sachin.com",
+        shortUrl: val.data.result.full_short_link,
+      });
     } catch (err) {
       console.log(err);
     }
