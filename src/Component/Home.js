@@ -17,9 +17,16 @@ function Home() {
   async function fetch(data) {
     try {
       const val = await axios(`https://api.shrtco.de/v2/shorten?url=${data}`);
+
       setShortUrl([...shortUrl, val.data.result.full_short_link]);
 
-      axios.post(`https://urlshort-nea4.onrender.com`);
+      const res = await axios.post(
+        `https://urlshot1.onrender.com/urlcreator/createurl`,
+        {
+          originalUrl: "sachin.com",
+          shortUrl: val.data.result.full_short_link,
+        }
+      );
     } catch (err) {
       console.log(err);
     }
