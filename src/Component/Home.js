@@ -14,24 +14,26 @@ function Home() {
     //  console.log(e.target.value);
   };
 
-  async function fetch(data) {
-    try {
-      const val = await axios(`https://api.shrtco.de/v2/shorten?url=${data}`);
+  const fetch = (data) => {
+    axios
+      .get(`https://api.shrtco.de/v2/shorten?url=${data}`)
+      .then((response) => {
+        setShortUrl([response.data.result.full_short_link, ...shortUrl]);
 
-      setShortUrl([...shortUrl, val.data.result.full_short_link]);
-
-      axios
-        .post(`https://urlshot1.onrender.com/urlcreator/createurl`, {
-          originalUrl: "sachin.com",
-          shortUrl: val.data.result.full_short_link,
-        })
-        .then(() => {
-          console.log("Data updated");
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
+        axios
+          .post(`https://urlshot1.onrender.com/urlcreator/createurl`, {
+            originalUrl: data,
+            shortUrl: response.data.result.full_short_link,
+          })
+          .then((response) => {
+            console.log(response);
+            alert("Url Shortner link has been sent to DB ");
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+  };
   return (
     <>
       <h1> URL shortner</h1>
