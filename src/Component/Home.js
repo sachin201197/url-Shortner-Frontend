@@ -21,10 +21,18 @@ function Home() {
         setShortUrl([response.data.result.full_short_link, ...shortUrl]);
 
         axios
-          .post(`https://urlshot1.onrender.com/urlcreator/createurl`, {
-            originalUrl: data,
-            shortUrl: response.data.result.full_short_link,
-          })
+          .post(
+            `https://urlshot1.onrender.com/urlcreator/createurl`,
+            {
+              originalUrl: data,
+              shortUrl: response.data.result.full_short_link,
+            },
+            {
+              headers: {
+                "Access-Control-Allow-Origin": "*",
+              },
+            }
+          )
           .then((response) => {
             console.log(response);
             alert("Url Shortner link has been sent to DB ");
